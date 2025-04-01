@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>How Deep Will You Go?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 2rem;
+      transition: background 0.5s ease, color 0.5s ease;
+      background-color: #fef6f0; /* soft peach default */
+
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      transition: color 0.5s ease;
+    }
+
+    #card {
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      border-radius: 16px;
+      font-size: 1.3rem;
+      text-align: center;
+      margin: 1rem 0;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, color 0.5s ease, background 0.5s ease;
+    }
+
+    #category {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background-color: #000dff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background-color: #6847e0;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      #card {
+        font-size: 1.1rem;
+        padding: 1.5rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+    <div id="titlePage" style="text-align:center;">
+        <h1>See Me</h1>
+        <p style="font-size: 1.1rem;">A card game to connect, reflect, and grow.</p>
+        <button onclick="showGame()">Start Game</button>
+        <button onclick="showRules()">View Rules</button>
+        <button onclick="showWhy()">Why I Made This</button>
+      </div>
+      
+      <!-- Rules Page -->
+      <div id="rulesPage" style="display:none; text-align:center;">
+        <h2>Rules</h2>
+        <p style="max-width: 600px; margin: auto; line-height: 1.6;">
+          This game is built for honest conversations.<br><br>
+          🔹 <strong>Open</strong>: Easy, casual questions<br>
+          🔹 <strong>Refelct</strong>: More introspective prompts<br>
+          🔹 <strong>Reveal</strong>: Vulnerable, emotional topics<br>
+          🔹 <strong>Act</strong>: Do an action AND answer the question<br><br>
+          Take turns, or let one person read while others answer.<br>
+          Be kind. Be open. Be real.
+        </p>
+        <br>
+        <button onclick="showTitle()">Back to Title</button>
+        <button onclick="showWhy()">Why I Made This</button>
+      </div>
+      
+      <!-- Game Page -->
+      <div id="gamePage" style="display:none; flex-direction: column; align-items: center; justify-content: center;">
+        <h1 id="title">SEE ME</h1>
+        <div id="card">
+          <div id="category">Category: Icebreaker</div>
+          <div id="prompt">Tap below to draw a question.</div>
+        </div>
+        <button onclick="drawCard()">Draw a New Prompt</button>
+        <button onclick="endGame()" style="margin-top: 1rem; padding: 0.7rem 1.5rem; background-color: #ff6b6b; color: white; border: none; border-radius: 10px;">End Game</button>
+      </div>
+
+
+      <div id="endPage" style="display:none; text-align:center; color: white; padding: 2rem;">
+        <h2 style="font-size: 2rem;">You're done for now.</h2>
+        <p style="max-width: 600px; margin: 1rem auto; font-size: 1.1rem; line-height: 1.7;">
+          Let whatever came up sit with you.<br><br>
+          Maybe take a deep breath.<br>
+          Maybe offer each other a hug.<br>
+          Or just be here for a minute — no rush to move on.
+        </p>
+        <button onclick="location.reload()" style="margin-top: 2rem; padding: 0.7rem 1.5rem; background-color: #ffffff; color: #000; border: none; border-radius: 10px;">Return to Title</button>
+        <button onclick="showWhy()">Why I Made This</button>
+      </div>
+
+      <div id="whyPage" style="display:none; text-align:center; color: white; padding: 2rem;">
+        <h2>Why I Made This</h2>
+        <p style="max-width: 600px; margin: 1rem auto; font-size: 1.1rem; line-height: 1.7;">
+          I made this game to help people open up — gently, honestly, and without pressure.<br><br>
+          
+          Sometimes we don’t know how to talk about the things that matter. We want to connect, but we’re afraid to start.  
+          <em>See Me</em> is meant to be that starting point — a slow, safe path into vulnerability, whether you’re with a friend, a partner, or just taking a quiet moment with yourself.<br><br>
+          
+          I created this for everyone, but also for a specific group close to my heart: pilots.  
+          In aviation, we’re trained to stay composed, solve problems, and push through — but we’re not always given space to talk about what we’re feeling.  
+          My hope is that this game gives pilots (and those who care about them) a way to connect, reflect, and be human with each other — beyond the cockpit.<br><br>
+          
+          <strong>Every purchase of See Me helps fund a bigger goal:</strong><br>
+          We’re working to provide a shared training aircraft for student pilots — giving them more access, opportunity, and support in their journey.<br><br>
+          
+          Thank you for being here. Thank you for seeing others. And thank you for helping someone take flight.
+        </p>
+        <button onclick="location.reload()" style="margin-top: 2rem; padding: 0.7rem 1.5rem; background-color: #ffffff; color: #000; border: none; border-radius: 10px;">Return to Title</button>
+      </div>
+
+  <script>
+    const open = [
+  "What's your favorite way to spend a day off?",
+  "What's a snack you always have on hand?",
+  "What's your go-to comfort movie?",
+  "What's a fun fact about your hometown?",
+  "What emoji do you use way too much?",
+  "What's a smell that instantly makes you happy?",
+  "What's a song you secretly jam out to?",
+  "If you could have any superpower, what would it be?",
+  "What’s your ideal vacation spot?",
+  "If your life were a movie, what would the title be?",
+  "What’s your go-to karaoke song?",
+  "What's something simple that always makes you smile?",
+  "If you could instantly master a skill, what would it be?",
+  "What’s your guilty pleasure food?",
+  "If you could time travel, where (or when) would you go?",
+  "What's your favorite holiday and why?",
+  "What animal do you think represents you?",
+  "What’s the best gift you’ve ever received?",
+  "What was your favorite childhood TV show?",
+  "Coffee or tea? How do you take it?",
+  "What’s something that always cheers you up?",
+  "Describe your perfect weekend.",
+  "What’s one app you can’t live without?",
+  "Do you collect anything?",
+  "What’s your favorite way to treat yourself?",
+  "What’s your favorite season and why?",
+  "Have you ever had a silly or unusual nickname?",
+  "What’s your go-to order at your favorite restaurant?",
+  "What’s the last thing that made you laugh really hard?",
+  "If you had a warning label, what would it say?",
+  "What’s your dream job, no matter how unrealistic?",
+  "What’s your favorite board or card game?",
+  "What’s a food you didn’t like as a kid but love now?",
+  "What’s one thing on your bucket list?",
+  "What’s a weird talent you have?",
+  "What’s your favorite way to waste time?",
+  "If you had to live in a movie universe, which one would you choose?",
+  "What’s something you’ve always wanted to learn?",
+  "Do you prefer mornings or nights?",
+  "What’s your go-to comfort outfit?",
+  "What was your first concert?",
+  "If you had a personal theme song, what would it be?",
+  "What’s the last photo you took on your phone?",
+  "Do you believe in luck or coincidences?",
+  "What’s a hobby you’ve always admired but never tried?",
+  "What’s your favorite type of weather?",
+  "If you could meet any fictional character, who would it be?",
+  "What’s your dream travel destination?",
+  "Are you more of a planner or go-with-the-flow type?",
+  "What’s your most-used emoji?",
+  "If you could swap lives with anyone for a day, who would it be?",
+  "What's your favorite comfort food?",
+  "What’s a scent that brings back strong memories?",
+  "Have you ever had a ridiculous fashion phase?",
+  "What’s your favorite thing about where you live?",
+  "What’s a holiday tradition you love?",
+  "What’s your favorite quote or saying?",
+  "What’s your go-to dance move?",
+  "What’s a TV show you could rewatch forever?",
+  "Do you believe in astrology? What's your sign?",
+  "If you had a yacht, what would you name it?",
+  "What’s your go-to pump-up song?",
+  "If you could live in any decade, which would it be?",
+  "What’s your go-to breakfast?",
+  "If your pet could talk, what do you think it would say?",
+  "What’s a fear you’ve overcome?",
+  "What fictional world would you love to live in?",
+  "What’s the last book you read and loved?",
+  "Would you rather explore space or the deep sea?",
+  "What’s your hidden party trick?",
+  "What's something people always ask you for help with?",
+  "What’s your favorite childhood memory?",
+  "What do you always carry with you?",
+  "Are you more of a sunrise or sunset person?",
+  "What’s your comfort YouTube or TikTok rabbit hole?",
+  "What’s a food combo you love that most people think is weird?",
+  "What’s your favorite thing to do on a rainy day?",
+  "What’s something you’ve always wanted to try but haven’t yet?",
+  "What’s the most spontaneous thing you’ve ever done?",
+  "What’s a piece of advice you’ll never forget?",
+  "What’s your favorite thing about weekends?",
+  "What’s your guilty pleasure song or artist?",
+  "Do you believe in fate or free will?",
+  "What’s something you’ve accomplished recently that you’re proud of?",
+  "What’s a hobby you picked up and still enjoy?",
+  "If you had a mascot, what would it be?",
+  "What’s your favorite thing to cook or bake?",
+  "What’s your love language?",
+  "Do you prefer texting or calling?",
+  "What’s your favorite way to relax after a long day?",
+  "What’s a game you’re really good at?",
+  "What’s a random compliment you still think about?",
+  "If you could speak another language fluently, which would you pick?",
+  "What’s your most used app right now?",
+  "Are you a night owl or early bird?",
+  "What’s your most chaotic or funny travel story?",
+  "What’s your ideal birthday celebration?",
+  "What’s a show or movie that made you cry?",
+  "If you had to eat one meal for the rest of your life, what would it be?",
+  "What’s something small that made your day recently?"
+];
+
+
+    const reflect = [
+      "What’s something you’ve never told anyone but feel ready to share?",
+  "What does love mean to you?",
+  "When was the last time you truly felt at peace?",
+  "What’s a personal value you refuse to compromise on?",
+  "What’s something you’re currently struggling with internally?",
+  "How do you define happiness in your life?",
+  "What’s a belief you used to hold that you've since changed?",
+  "What’s one thing you’re afraid people might misunderstand about you?",
+  "When do you feel most like yourself?",
+  "What’s something you wish you could forgive yourself for?",
+  "How do you respond to conflict in close relationships?",
+  "What do you crave most from other people?",
+  "What’s a decision that shaped who you are today?",
+  "What are you most proud of that no one really knows about?",
+  "How do you usually deal with emotional pain?",
+  "When’s the last time you were really proud of yourself?",
+  "What’s something you wish you were better at emotionally?",
+  "What kind of legacy do you want to leave behind?",
+  "What’s something you’re working on letting go of?",
+  "When was the last time you felt truly understood?",
+  "How do you show people you care about them?",
+  "What’s one thing you wish more people knew about you?",
+  "What fear do you think is holding you back the most?",
+  "Do you believe everything happens for a reason?",
+  "What’s one way you’ve grown in the last year?",
+  "When do you feel most safe emotionally?",
+  "What’s something you’ve healed from that once felt impossible?",
+  "Who in your life truly sees the real you?",
+  "What’s a relationship that changed you forever?",
+  "What role does vulnerability play in your life?",
+  "What are you avoiding that you know you need to face?",
+  "What’s a boundary you’re learning to set?",
+  "When was the last time you felt emotionally overwhelmed?",
+  "What’s a recurring thought you wish you could silence?",
+  "How do you define trust in a relationship?",
+  "What’s something that used to scare you but doesn’t anymore?",
+  "What’s one emotional risk you took that paid off?",
+  "What’s a quality you admire in others but struggle with yourself?",
+  "What’s something you’ve always wanted to say to someone but haven’t?",
+  "When do you feel most disconnected from yourself?",
+  "What’s a memory that still makes you emotional?",
+  "What part of your past do you revisit the most?",
+  "Do you think you’re harder on yourself than others are?",
+  "What’s your love language and how does it show up in your life?",
+  "What do you need to hear more often from people around you?",
+  "Have you ever outgrown someone you once deeply cared about?",
+  "What’s a part of yourself you’re still learning to accept?",
+  "What does emotional safety look like to you?",
+  "When do you feel most alone, even when you’re not?",
+  "What’s a version of yourself you miss — or want to return to?",
+  "What’s something you’ve never received that you wish someone had given you?",
+  "How do you handle being misunderstood?",
+  "What’s something about your inner world that no one sees?",
+  "What’s a truth you’re still learning to accept?",
+  "Who has impacted your self-worth the most?",
+  "What’s something you wish you could tell your younger self?",
+  "When was the last time you felt emotionally free?",
+  "What’s something you’ve outgrown that you held onto for too long?",
+  "What’s a moment you wish you could go back and redo?",
+  "How do you know when you're truly being yourself?",
+  "What’s a fear you’re currently facing?",
+  "What does being loved look like to you?",
+  "What makes you feel most alive?",
+  "What’s something you’ve done that you never thought you could?",
+  "Do you trust yourself? Why or why not?",
+  "What’s something you’ve never admitted out loud until now?",
+  "When have you felt most emotionally vulnerable?",
+  "How do you handle silence in a conversation?",
+  "What’s something you’re slowly starting to believe about yourself?",
+  "Who do you feel safest opening up to and why?",
+  "What’s a part of your life you’re actively trying to rebuild?",
+  "What do you think is the key to real connection?",
+  "What’s something you miss about being a kid?",
+  "When did you last experience real joy?",
+  "How do you define emotional intimacy?",
+  "What do you need to let go of to move forward?",
+  "What’s something that’s been weighing on your mind lately?",
+  "What’s a risk you regret not taking?",
+  "What makes you feel seen and heard?",
+  "What’s a thought that’s been on repeat in your head?",
+  "When have you felt completely accepted for who you are?",
+  "What’s a belief that grounds you when things feel chaotic?",
+  "What’s something you never realized you needed until you had it?",
+  "What does inner peace feel like for you?",
+  "When was the last time you forgave someone — or yourself?",
+  "What do you want people to remember you for?",
+  "How do you deal with feeling unappreciated?",
+  "What’s a habit you’re proud of building?",
+  "When do you feel most disconnected from others?",
+  "What do you turn to for emotional comfort?",
+  "Have you ever surprised yourself emotionally? When?",
+  "What role does honesty play in your relationships?",
+  "What’s something that scares you about the future?",
+  "What’s a part of you you rarely show others?",
+  "What’s one lesson you keep learning over and over?",
+  "What’s something you wish you could say to someone from your past?",
+  "What’s the difference between loneliness and being alone — to you?",
+  "What’s your definition of emotional strength?",
+  "When’s the last time you felt truly understood by someone?",
+  "What would emotional freedom look like in your life?"
+    ];
+
+    const reveal = [
+      "What’s a core wound you’ve carried for most of your life?",
+  "When did you last feel truly broken, and how did you cope?",
+  "What part of yourself are you most afraid to show others?",
+  "What do you fear people would think if they saw the real you?",
+  "What’s something you’ve never said out loud because it hurts too much?",
+  "What moment changed your life — but you don’t talk about it?",
+  "What’s the biggest lie you’ve ever told yourself?",
+  "What’s a truth you’re avoiding because it would force you to change?",
+  "What’s a memory you’ve tried to forget but can’t?",
+  "When did you feel like you lost yourself, even temporarily?",
+  "What does emotional rock bottom look like for you?",
+  "What’s one thing you’ve always needed from others but rarely received?",
+  "What’s something you’ve forgiven but haven’t forgotten?",
+  "What’s your biggest internal conflict right now?",
+  "What emotion do you suppress the most — and why?",
+  "How do you talk to yourself when no one else is around?",
+  "What’s something you desperately wish were different about your past?",
+  "What part of you feels unloved or unlovable?",
+  "What’s something you’ve learned to hide to protect yourself?",
+  "What belief about yourself are you still trying to unlearn?",
+  "Have you ever betrayed your own values to please someone else?",
+  "What does shame look like in your life?",
+  "What would it take for you to fully forgive yourself?",
+  "What’s something you haven’t allowed yourself to grieve yet?",
+  "What does healing look like for you right now?",
+  "What’s something you've never admitted because it felt too vulnerable?",
+  "What’s the most emotionally intense experience you’ve ever had?",
+  "What’s a version of you that no one knows about?",
+  "What’s something you’re scared to confront within yourself?",
+  "Have you ever pushed someone away because you didn’t feel worthy of them?",
+  "What’s something you long for but don’t believe you deserve?",
+  "When have you chosen silence over truth, and why?",
+  "What part of your identity feels the most misunderstood?",
+  "What have you been pretending is fine when it’s not?",
+  "What’s the hardest boundary you’ve had to set?",
+  "What’s a moment from your childhood that still affects you today?",
+  "What do you do when you're afraid of being judged?",
+  "What’s a need you’ve buried for the sake of someone else?",
+  "What’s something that makes you question your worth?",
+  "What’s a dream you’ve let go of — and why?",
+  "What’s something about you that you’re afraid might never change?",
+  "What pain have you normalized to survive?",
+  "What’s something you wish someone would’ve protected you from?",
+  "What’s the emotional weight you’re tired of carrying?",
+  "What’s a feeling you’ve been numbing lately?",
+  "What would unconditional acceptance feel like to you?",
+  "What does emotional intimacy look like to you — in its rawest form?",
+  "When have you felt completely exposed — and how did you handle it?",
+  "What do you wish someone would ask you, but they never do?",
+  "What’s something you’ve said that you wish you could take back?",
+  "What’s something about you that you feel no one could truly understand?",
+  "What’s a part of your story that still feels unfinished?",
+  "Have you ever stayed in a place or relationship out of fear?",
+  "What’s the loneliest you’ve ever felt?",
+  "What belief do you cling to even though it causes you pain?",
+  "What’s a secret you’re holding to protect someone else?",
+  "What makes you feel like you’re not enough?",
+  "When did you last feel emotionally abandoned?",
+  "What mask do you wear most often — and why?",
+  "What’s something about your past that still controls you?",
+  "What’s the most vulnerable thing you’ve ever shared with someone?",
+  "What do you feel you owe your younger self?",
+  "What emotion do you judge yourself for feeling?",
+  "What’s something you fear would make people leave if they knew?",
+  "What’s something you’ve tried to fix in others that reflects a wound in you?",
+  "When do you struggle to ask for help — and why?",
+  "What would it take for you to feel fully safe with someone?",
+  "What do you envy in others that you wish you had within yourself?",
+  "What’s something you regret believing about love?",
+  "What would happen if you stopped pretending everything was okay?",
+  "What’s one painful truth you’ve had to accept recently?",
+  "How do you protect yourself emotionally — maybe too much?",
+  "What do you do when you feel completely overwhelmed inside?",
+  "What’s something you long to be forgiven for?",
+  "When was the last time you let someone truly support you?",
+  "What’s a truth you’re terrified to admit to yourself?",
+  "When was the last time you felt truly emotionally safe?",
+  "What part of your healing journey are you still hiding from others?",
+  "What’s something you feel like you have to carry alone?",
+  "What relationship pattern are you trying to break?",
+  "What do you wish someone had said to you when you needed them most?",
+  "What are you most afraid someone will see in you?",
+  "What are you still grieving, even if you don’t talk about it?",
+  "When have you settled for less than you deserved?",
+  "What’s a part of yourself you’re still trying to reclaim?",
+  "What makes you feel like you’re hard to love?",
+  "What’s something you lost that shaped who you became?",
+  "What do you do to avoid feeling emotional pain?",
+  "Have you ever felt like your emotions were too much for others?",
+  "What’s a part of your personality that formed as protection?",
+  "What does emotional surrender mean to you?",
+  "When do you feel most tempted to isolate yourself?",
+  "What’s something you deeply fear being judged for?",
+  "What emotion do you avoid the most — and what triggers it?",
+  "What’s a role you’ve played in life that no longer fits you?",
+  "What’s something you still blame yourself for — even if it wasn’t your fault?",
+  "When do you feel most disconnected from your body or spirit?",
+  "What have you sacrificed for someone who wouldn’t do the same?",
+  "What does it mean to feel truly ‘at home’ with someone?",
+  "What would it feel like to finally forgive yourself — completely?"
+    ];
+
+    const act = [
+  {
+    action: "Text someone you love right now.",
+    question: "What’s something you’ve always wanted to thank them for?"
+  },
+  {
+    action: "Make eye contact with the person across from you for 15 seconds.",
+    question: "What emotions came up while doing that?"
+  },
+  {
+    action: "Switch seats or spots with someone.",
+    question: "How does it feel to change perspective?"
+  },
+  {
+    action: "Write down one fear and fold it in half.",
+    question: "Why does that fear have power over you?"
+  },
+  {
+    action: "Say one thing out loud that you’ve never said before.",
+    question: "How did it feel to express that?"
+  },
+  {
+    action: "Send a voice note to someone you care about.",
+    question: "What’s something you admire about them?"
+  },
+  {
+    action: "Take a deep breath and close your eyes for 10 seconds.",
+    question: "What’s the first emotion you noticed?"
+  },
+  {
+    action: "Compliment the person nearest to you.",
+    question: "How did it feel to give that compliment?"
+  },
+  {
+    action: "Stand up and stretch for 15 seconds.",
+    question: "What emotion is stored in your body right now?"
+  },
+  {
+    action: "Swap phones with the person next to you for 1 minute (scroll safe!).",
+    question: "How comfortable were you with that level of trust?"
+  },
+  {
+    action: "Pick a song and play 30 seconds of it.",
+    question: "What memory or feeling does it bring up?"
+  },
+  {
+    action: "Draw something on a piece of paper (even if it’s bad).",
+    question: "What does it say about your current state of mind?"
+  },
+  {
+    action: "Choose someone in the room and say one thing you appreciate about them.",
+    question: "Why was that important to say out loud?"
+  },
+  {
+    action: "Look through your recent photos and pick one to talk about.",
+    question: "What’s the story behind it?"
+  },
+  {
+    action: "Write one truth about yourself on a piece of paper.",
+    question: "How often do you share that truth with others?"
+  },
+  {
+    action: "Choose an object near you and explain why it represents you right now.",
+    question: "What does that say about how you're feeling?"
+  },
+  {
+    action: "Trade questions: ask the other person anything you want.",
+    question: "How did it feel to give up control of the question?"
+  },
+  {
+    action: "Hold someone's hand or make intentional physical contact.",
+    question: "Did it feel comforting, awkward, or something else?"
+  },
+  {
+    action: "Say the first thing that comes to mind, no filter.",
+    question: "Why do you think that thought came up?"
+  },
+  {
+    action: "Stand up and describe how your body feels right now.",
+    question: "What does that tell you about your emotional state?"
+  },
+  {
+    action: "Share one regret without explaining it.",
+    question: "Why do you think that moment stuck with you?"
+  },
+  {
+    action: "Pick a number from 1–10. Share a memory based on that age.",
+    question: "What stands out most from that time in your life?"
+  },
+  {
+    action: "Sit in silence with someone for 20 seconds.",
+    question: "What came up for you during the quiet?"
+  },
+  {
+    action: "Open your notes app and read the last thing you wrote.",
+    question: "What were you processing in that moment?"
+  },
+  {
+    action: "Whisper a truth to yourself that you haven’t said out loud.",
+    question: "What would it take to say it to someone else?"
+  },
+  {
+    action: "Write a note to your future self.",
+    question: "What do you hope they’ve learned by then?"
+  },
+  {
+    action: "Look someone in the eye and smile for 10 seconds.",
+    question: "What did you feel in that moment of connection?"
+  },
+  {
+    action: "Say something kind to yourself out loud.",
+    question: "Why is it hard (or easy) to believe what you said?"
+  },
+  {
+    action: "Write down one thing you're avoiding.",
+    question: "Why do you think you're putting it off?"
+  },
+  {
+    action: "Describe a recent dream or daydream.",
+    question: "What do you think it represents?"
+  },
+  {
+    action: "Choose a random object in the room and tell a made-up story about it.",
+    question: "How did creating something from nothing feel?"
+  },
+  {
+    action: "Name one person who’s impacted your life — good or bad.",
+    question: "How did that experience shape you?"
+  },
+  {
+    action: "Take a short walk (even in circles).",
+    question: "How did your body and mind respond to movement?"
+  },
+  {
+    action: "Name one thing you’re grateful for today.",
+    question: "What would life be like without it?"
+  },
+  {
+    action: "Speak one sentence you need to hear right now.",
+    question: "How true does it feel?"
+  },
+  {
+    action: "Turn to someone and ask, 'How are you, really?'",
+    question: "How often do you ask that with full attention?"
+  },
+  {
+    action: "Say one thing you've been holding back.",
+    question: "What stopped you from saying it sooner?"
+  },
+  {
+    action: "Name a risk you want to take soon.",
+    question: "What’s stopping you from taking it?"
+  },
+  {
+    action: "Pick one word to describe how you feel right now.",
+    question: "What’s beneath that feeling?"
+  },
+  {
+    action: "Write down something you need to let go of.",
+    question: "What keeps you holding on?"
+  },
+  {
+    action: "Set a timer and don’t speak for 30 seconds.",
+    question: "What was the loudest thought in the silence?"
+  },
+  {
+    action: "Share one lesson you’ve learned the hard way.",
+    question: "How did it change your perspective?"
+  },
+  {
+    action: "Think of someone you’ve hurt. Say something you’d want them to hear.",
+    question: "What stopped you from saying it before?"
+  },
+  {
+    action: "Say something positive about yourself — without laughing or apologizing.",
+    question: "Why did that feel powerful (or uncomfortable)?"
+  },
+  {
+    action: "Choose one emotion you struggle to express.",
+    question: "What would expressing it more often look like?"
+  },
+  {
+    action: "Ask someone to describe you in three words.",
+    question: "How does that compare to how you see yourself?"
+  },
+  {
+    action: "Say out loud: 'This is who I am right now.'",
+    question: "How did that feel in your body?"
+  },
+  {
+    action: "Think of a time you felt fully alive.",
+    question: "What made that moment so impactful?"
+  },
+  {
+    action: "Turn off distractions for 60 seconds and just be present.",
+    question: "What did you notice that you usually miss?"
+  },
+  {
+    action: "Choose someone to share a quiet moment with — no talking.",
+    question: "How connected did you feel through stillness?"
+  },
+];
+
+function drawCard() {
+  const title = document.getElementById("title");
+  const card = document.getElementById("card");
+  const prompt = document.getElementById("prompt");
+  const category = document.getElementById("category");
+  const body = document.body;
+
+  const roll = Math.random();
+  let chosenCategory = "open";
+
+  if (roll < 0.166) {
+    chosenCategory = "act";
+  } else {
+    const normalCategories = ["open", "reflect", "reveal"];
+    chosenCategory = normalCategories[Math.floor(Math.random() * normalCategories.length)];
+  }
+
+  let question = "";
+  let backgroundColor = "";
+  let textColor = "";
+
+  switch (chosenCategory) {
+    case "act":
+      const actionCard = act[Math.floor(Math.random() * act.length)];
+      question = `<strong>Action:</strong> ${actionCard.action}<br><br><strong>Question:</strong> ${actionCard.question}`;
+      backgroundColor = "#03254c";
+      textColor = "#fff";
+      title.textContent = "Act";
+      break;
+
+    case "reflect":
+      question = reflect[Math.floor(Math.random() * reflect.length)];
+      backgroundColor = "#282828";
+      textColor = "#fff";
+      title.textContent = "Reflect";
+      break;
+
+    case "reveal":
+      question = reveal[Math.floor(Math.random() * reveal.length)];
+      backgroundColor = "#000000";
+      textColor = "#fff";
+      title.textContent = "Reveal";
+      break;
+
+    case "open":
+    default:
+      question = open[Math.floor(Math.random() * open.length)];
+      backgroundColor = "#808080";
+      textColor = "#000";
+      title.textContent = "Open";
+      break;
+  }
+
+  body.style.backgroundColor = backgroundColor;
+  body.style.color = textColor;
+  card.style.color = textColor;
+  category.textContent = `Category: ${title.textContent}`;
+  prompt.innerHTML = question;
+
+  card.style.transform = "scale(1.05)";
+  setTimeout(() => {
+    card.style.transform = "scale(1)";
+  }, 150);
+}
+
+function showTitle() {
+  document.body.style.backgroundColor = "#fef6f0";
+  document.getElementById("titlePage").style.display = "block";
+  document.getElementById("rulesPage").style.display = "none";
+  document.getElementById("gamePage").style.display = "none";
+  document.getElementById("backButton").style.display = "none";
+}
+
+function showRules() {
+  document.body.style.backgroundColor = "#e6f4f9"; // soft blue
+  document.getElementById("titlePage").style.display = "none";
+  document.getElementById("rulesPage").style.display = "block";
+  document.getElementById("gamePage").style.display = "none";
+  document.getElementById("backButton").style.display = "inline-block";
+}
+
+function showGame() {
+  document.body.style.backgroundColor = "#ffffff"; // will change by card type after
+  document.getElementById("titlePage").style.display = "none";
+  document.getElementById("rulesPage").style.display = "none";
+  document.getElementById("gamePage").style.display = "flex";
+  document.getElementById("backButton").style.display = "none";
+}
+
+function endGame() {
+  document.body.style.backgroundColor = "#000000";
+  document.body.style.color = "#ffffff";
+  document.getElementById("titlePage").style.display = "none";
+  document.getElementById("rulesPage").style.display = "none";
+  document.getElementById("gamePage").style.display = "none";
+  document.getElementById("endPage").style.display = "block";
+}
+
+function showWhy() {
+  document.body.style.backgroundColor = "#000000";
+  document.body.style.color = "#ffffff";
+  document.getElementById("titlePage").style.display = "none";
+  document.getElementById("rulesPage").style.display = "none";
+  document.getElementById("gamePage").style.display = "none";
+  document.getElementById("endPage").style.display = "none";
+  document.getElementById("whyPage").style.display = "block";
+}
+  </script>
+
+</body>
+</html>
